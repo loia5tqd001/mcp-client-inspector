@@ -1,10 +1,30 @@
-# MCP Client Inspector (Client-Only)
+# MCP Remote Inspector
 
-A minimal, browser-based tool for inspecting real, raw message exchanges between an MCP Client and a remote MCP Server. Unlike the official [`@modelcontextprotocol/inspector`](https://github.com/modelcontextprotocol/inspector), this project is **client-only**—no local proxy server required. You can use it instantly at:
+A minimal, browser-based tool for inspecting **real, raw message exchanges** between an MCP Client and a _remote MCP Server_. Unlike the official [`@modelcontextprotocol/inspector`](https://github.com/modelcontextprotocol/inspector), this project is **client-only**—no local proxy server required. You can use it instantly _[👉 HERE](https://mcp-inspect.vercel.app/)_.
 
-👉 **[Live Demo](https://mcp-client-inspector.vercel.app/)**
+```mermaid
+flowchart TD
+    subgraph Official_Inspector["@modelcontextprotocol/inspector"]
+        C[MCP Client] <--> D["[Proxy MCP Server] <br> Local Proxy <br> [Proxy MCP Client]"] <--> E[MCP Server]
+    end
+    subgraph This_Project["mcp-inspect.vercel.app"]
+        A[MCP Client] <--> B[MCP Server]
+    end
+```
 
-![MCP Client Inspector](./screenshots/mcp-inspector-peek.png)
+<!-- | This Project                                            | @modelcontextprotocol/inspector                             |
+| ------------------------------------------------------- | ----------------------------------------------------------- |
+| ![Network Tab Ours](./screenshots/network_tab_ours.png) | ![Network Tab Theirs](./screenshots/network_tab_theirs.png) | -->
+
+### [https://mcp-inspect.vercel.app](https://mcp-inspect.vercel.app/)
+
+<img src="./screenshots/network_tab_ours.png" alt="Network Tab Ours" style="border: 1px solid #ccc; border-radius: 4px; margin-right: 10px;" />
+
+### @modelcontextprotocol/inspector
+
+<img src="./screenshots/network_tab_theirs.png" alt="Network Tab Theirs" style="border: 1px solid #ccc; border-radius: 4px; margin-right: 10px;" />
+
+<!-- ![MCP Client Inspector](./screenshots/mcp-inspector-peek.png) -->
 
 ---
 
@@ -14,25 +34,23 @@ A minimal, browser-based tool for inspecting real, raw message exchanges between
 - **Raw Endpoint Visibility:** If the server sends a message to `/mcp/message`, you'll see `/mcp/message` (not `/message` as with the official inspector's proxy).
 - **Heartbeat/Ping Support:** All messages, including server heartbeats (ping), are visible. The official inspector hides these.
 - **Streamable HTTP Mode:** If the server uses `enableJsonResponse=true`, you'll see the actual JSON response. The official inspector always shows `text/event-stream` (from its proxy), not the real server response.
-- **Copyable Results:** All tool call results are easy to copy for debugging or sharing.
 
 ## Limitations
 
 - **Tools-Only Focus:** Only supports the _Tools_ use case (SSE and Streamable HTTP). Does **not** support STDIO, Prompts, Resources, etc.
-- **CORS:** As a browser app, it is subject to CORS restrictions. If the MCP Server does not allow cross-origin requests, you may not be able to connect.
-- **No Local Proxy:** Unlike the official inspector, there is no local proxy to bypass CORS or mask endpoints.
+- **CORS:** As a browser app, it is subject to CORS restrictions. If the MCP Server does not allow cross-origin requests, you may not be able to connect. Unlike the official inspector, there is no local proxy to bypass CORS.
 
 ## When to Use This
 
 - You want to see the _real_ message flow between your MCP Client and a remote MCP Server.
 - You want to debug or understand the actual protocol, endpoints, and message types (including heartbeats/pings).
-- You don't want to install or run a local proxy server.
+- You don't want to install or run @modelcontextprotocol/inspector, just access an MCP Inspector directly.
 
 ## How to Use
 
 ### 1. Use the Live Demo
 
-Just open [https://mcp-client-inspector.vercel.app/](https://mcp-client-inspector.vercel.app/) in your browser.
+Just open [https://mcp-inspect.vercel.app](https://mcp-inspect.vercel.app/) in your browser.
 
 - Enter your MCP Server URL (examples: `https://mcp.deepwiki.com/sse` for SSE, `https://mcp.context7.com/mcp` for Streamable HTTP).
 - Choose the transport type (SSE or Streamable HTTP).
