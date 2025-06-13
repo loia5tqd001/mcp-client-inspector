@@ -35,7 +35,7 @@ const copyIcon = (
   </svg>
 );
 
-export const CopiableArea: React.FC<CopiableAreaProps> = ({
+const CopiableArea: React.FC<CopiableAreaProps> = ({
   children,
   className = '',
   ariaLabel,

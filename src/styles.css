@@ -1,7 +1,93 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-y: scroll;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
+}
+
+@media (max-width: 1000px) {
+  #root {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  #root {
+    padding: 0;
+  }
 }
 
 .logo {
@@ -41,13 +127,22 @@
 }
 
 .inspector-root {
-  width: min(100vw, 900px);
+  width: min(100vw, 850px);
   margin: 2rem auto;
   padding: 2rem;
   background: var(--inspector-bg, #fff);
   border-radius: 16px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.08);
   font-family: 'Inter', system-ui, sans-serif;
+}
+
+@media (max-width: 700px) {
+  .inspector-root {
+    width: 100vw;
+    margin: 0;
+    padding: 1rem;
+    border-radius: 0;
+  }
 }
 
 .inspector-header {
@@ -80,6 +175,12 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1em;
+}
+
+@media (max-width: 900px) {
+  .server-url-input {
+    flex: none;
+  }
 }
 
 .set-url-btn {
@@ -185,7 +286,7 @@
   font-family: 'Fira Mono', monospace;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .inspector-root {
     padding: 1rem;
   }
@@ -231,10 +332,12 @@
   border-radius: inherit;
   padding: inherit;
   min-height: inherit;
-  max-height: 100vh;
-  overflow-x: auto;
+  max-height: calc(100vh - 100px);
+  overflow-x: visible;
   overflow-y: auto;
   margin: 0;
+  overscroll-behavior: contain;
+  white-space: pre-wrap;
 }
 .copiable-area-copy-btn {
   position: absolute;
@@ -289,4 +392,4 @@
 }
 .connection-dot.disconnected {
   background: #ff4136;
-}
+} 

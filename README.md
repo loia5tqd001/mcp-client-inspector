@@ -1,54 +1,71 @@
-# React + TypeScript + Vite
+# MCP Client Inspector (Client-Only)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A minimal, browser-based tool for inspecting real, raw message exchanges between an MCP Client and a remote MCP Server. Unlike the official [`@modelcontextprotocol/inspector`](https://github.com/modelcontextprotocol/inspector), this project is **client-only**—no local proxy server required. You can use it instantly at:
 
-Currently, two official plugins are available:
+👉 **[Live Demo](https://mcp-client-inspector.vercel.app/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![MCP Client Inspector](./screenshots/mcp-inspector-peek.png)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Key Features & Differences
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **Direct-to-Server:** Connects directly to any MCP Server endpoint (SSE or Streamable HTTP), so you see the _real_ messages and endpoints—no proxy masking.
+- **Raw Endpoint Visibility:** If the server sends a message to `/mcp/message`, you'll see `/mcp/message` (not `/message` as with the official inspector's proxy).
+- **Heartbeat/Ping Support:** All messages, including server heartbeats (ping), are visible. The official inspector hides these.
+- **Streamable HTTP Mode:** If the server uses `enableJsonResponse=true`, you'll see the actual JSON response. The official inspector always shows `text/event-stream` (from its proxy), not the real server response.
+- **Copyable Results:** All tool call results are easy to copy for debugging or sharing.
+
+## Limitations
+
+- **Tools-Only Focus:** Only supports the _Tools_ use case (SSE and Streamable HTTP). Does **not** support STDIO, Prompts, Resources, etc.
+- **CORS:** As a browser app, it is subject to CORS restrictions. If the MCP Server does not allow cross-origin requests, you may not be able to connect.
+- **No Local Proxy:** Unlike the official inspector, there is no local proxy to bypass CORS or mask endpoints.
+
+## When to Use This
+
+- You want to see the _real_ message flow between your MCP Client and a remote MCP Server.
+- You want to debug or understand the actual protocol, endpoints, and message types (including heartbeats/pings).
+- You don't want to install or run a local proxy server.
+
+## How to Use
+
+### 1. Use the Live Demo
+
+Just open [https://mcp-client-inspector.vercel.app/](https://mcp-client-inspector.vercel.app/) in your browser.
+
+- Enter your MCP Server URL (examples: `https://mcp.deepwiki.com/sse` for SSE, `https://mcp.context7.com/mcp` for Streamable HTTP).
+- Choose the transport type (SSE or Streamable HTTP).
+- Connect, list tools, select a tool, fill in parameters, and call the tool.
+- View and copy the raw results and all exchanged messages.
+- **Tip:** Open your browser's DevTools Network tab to see the real HTTP requests and responses exchanged directly with the MCP server—no proxy, no masking.
+
+![Network Tab](./screenshots/network-tab.png)
+
+### 2. Run Locally (for development)
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then open [http://localhost:5173](http://localhost:5173) in your browser.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 3. Build for Production
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm run build
 ```
+
+---
+
+## Why Not Use the Official Inspector?
+
+- The official [`modelcontextprotocol/inspector`](https://github.com/modelcontextprotocol/inspector) runs a local proxy server, so you only see messages as they pass through the proxy—not the _real_ server endpoints or all message types.
+- This project is ideal for protocol debugging, CORS testing, and understanding the _actual_ MCP Client/Server exchange.
+
+---
+
+## License
+
+MIT
