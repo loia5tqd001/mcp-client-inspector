@@ -40,6 +40,15 @@ const App: React.FC = () => {
         >
           MCP Remote Inspect
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}>
+            <span
+              className={`connection-dot ${
+                connected[transportType] ? 'connected' : 'disconnected'
+              }`}
+              aria-label={
+                connected[transportType] ? 'Connected' : 'Not connected'
+              }
+              title={connected[transportType] ? 'Connected' : 'Not connected'}
+            />
             <a
               className='github-star-btn'
               href='https://github.com/loia5tqd001/mcp-inspect'
@@ -59,15 +68,6 @@ const App: React.FC = () => {
               </svg>
               <span>Star</span>
             </a>
-            <span
-              className={`connection-dot ${
-                connected[transportType] ? 'connected' : 'disconnected'
-              }`}
-              aria-label={
-                connected[transportType] ? 'Connected' : 'Not connected'
-              }
-              title={connected[transportType] ? 'Connected' : 'Not connected'}
-            />
           </div>
         </h1>
       </header>
