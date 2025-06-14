@@ -399,6 +399,35 @@ input:focus {
   background: #ff4136;
 } 
 
-.github-button-container span {
-  display: flex;
+
+.github-star-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  background: #f6f8fa;
+  color: #24292f;
+  border: 1px solid #d0d7de;
+  border-radius: 4px;
+  padding: 0.4em 0.8em;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 1px 0 rgba(27,31,35,0.04);
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.github-star-btn:hover {
+  background: #eaecef;
+  border-color: #b6bac0;
+  color: #24292f;
+}
+.github-star-btn .octicon {
+  fill: currentColor;
+  vertical-align: middle;
+  margin-right: 0;
+}
+.github-star-btn .octicon-mark-github {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
 }
