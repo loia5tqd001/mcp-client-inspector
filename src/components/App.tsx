@@ -1,6 +1,7 @@
 import React from 'react';
 import CopiableArea from './CopiableArea';
 import { useMCPClient } from '../hooks/useMCPClient';
+import GitHubButton from 'react-github-btn';
 
 const App: React.FC = () => {
   const {
@@ -31,7 +32,19 @@ const App: React.FC = () => {
         <h1
           style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5em' }}
         >
-          MCP Inspector
+          <div className='github-button-container'>
+            <GitHubButton
+              href='https://github.com/loia5tqd001/mcp-inspect'
+              data-color-scheme='no-preference: light; light: light; dark: dark;'
+              data-icon='octicon-star'
+              data-size='large'
+              data-show-count='true'
+              aria-label='Star loia5tqd001/mcp-inspect on GitHub'
+            >
+              Star
+            </GitHubButton>
+          </div>
+          MCP Remote Inspector
           <span
             className={`connection-dot ${
               connected[transportType] ? 'connected' : 'disconnected'

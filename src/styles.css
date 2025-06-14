@@ -393,3 +393,7 @@ button:focus-visible {
 .connection-dot.disconnected {
   background: #ff4136;
 } 
+
+.github-button-container span {
+  display: flex;
+}
