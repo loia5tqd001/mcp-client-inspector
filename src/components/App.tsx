@@ -2,6 +2,7 @@ import React from 'react';
 import CopiableArea from './CopiableArea';
 import { useMCPClient } from '../hooks/useMCPClient';
 import GitHubButton from 'react-github-btn';
+import Select from 'react-select';
 
 const App: React.FC = () => {
   const {
@@ -30,30 +31,38 @@ const App: React.FC = () => {
     <div className='inspector-root'>
       <header className='inspector-header'>
         <h1
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5em' }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5em',
+            flexWrap: 'wrap',
+          }}
         >
-          <div className='github-button-container'>
-            <GitHubButton
-              href='https://github.com/loia5tqd001/mcp-inspect'
-              data-color-scheme='no-preference: light; light: light; dark: dark;'
-              data-icon='octicon-star'
-              data-size='large'
-              data-show-count='true'
-              aria-label='Star loia5tqd001/mcp-inspect on GitHub'
-            >
-              Star
-            </GitHubButton>
+          MCP Remote Inspect
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5em' }}>
+            <div className='github-button-container'>
+              <GitHubButton
+                href='https://github.com/loia5tqd001/mcp-inspect'
+                data-color-scheme='no-preference: light; light: light; dark: dark;'
+                data-icon='octicon-star'
+                data-size='large'
+                data-show-count='true'
+                aria-label='Star loia5tqd001/mcp-inspect on GitHub'
+              >
+                Star
+              </GitHubButton>
+            </div>
+            <span
+              className={`connection-dot ${
+                connected[transportType] ? 'connected' : 'disconnected'
+              }`}
+              aria-label={
+                connected[transportType] ? 'Connected' : 'Not connected'
+              }
+              title={connected[transportType] ? 'Connected' : 'Not connected'}
+            />
           </div>
-          MCP Remote Inspector
-          <span
-            className={`connection-dot ${
-              connected[transportType] ? 'connected' : 'disconnected'
-            }`}
-            aria-label={
-              connected[transportType] ? 'Connected' : 'Not connected'
-            }
-            title={connected[transportType] ? 'Connected' : 'Not connected'}
-          />
         </h1>
       </header>
       <section className='inspector-controls'>
@@ -121,21 +130,27 @@ const App: React.FC = () => {
         >
           List Tools
         </button>
-        <select
+        <Select
           className='tool-select'
-          value={selectedToolIdx[transportType]}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            handleToolSelect(Number(e.target.value))
+          classNamePrefix='react-select'
+          value={
+            tools[transportType].length > 0 &&
+            selectedToolIdx[transportType] !== -1
+              ? {
+                  value: selectedToolIdx[transportType],
+                  label:
+                    tools[transportType][selectedToolIdx[transportType]].name,
+                }
+              : null
           }
-          disabled={tools[transportType].length === 0}
-        >
-          <option value={-1}>Select a tool</option>
-          {tools[transportType].map((tool, idx) => (
-            <option key={tool.name} value={idx}>
-              {tool.name}
-            </option>
-          ))}
-        </select>
+          placeholder='Select a tool'
+          onChange={(option) => handleToolSelect(option ? option.value : -1)}
+          options={tools[transportType].map((tool, idx) => ({
+            value: idx,
+            label: tool.name,
+          }))}
+          isDisabled={tools[transportType].length === 0}
+        />
         <div>
           {tools[transportType].length > 0 && (
             <div className='tool-description'>

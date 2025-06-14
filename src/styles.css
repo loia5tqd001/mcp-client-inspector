@@ -49,6 +49,7 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  min-height: 38px; /* to match the height of react-select */
 }
 button:hover {
   border-color: #646cff;
@@ -169,6 +170,14 @@ button:focus-visible {
   font-weight: 500;
 }
 
+/* to match the style of react-select */
+input:focus {
+  outline-color: #2684ff;
+  -webkit-outline-color: #2684ff;
+  -moz-outline-color: #2684ff;
+  -ms-outline-color: #2684ff;
+}
+
 .server-url-input {
   flex: 1 1 300px;
   padding: 0.5em 1em;
@@ -244,14 +253,10 @@ button:focus-visible {
 
 .tool-select {
   min-width: 200px;
-  padding: 0.5em;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1em;
 }
 
 .tool-params {
-  width: calc(100% - 100px);
+  width: 100%;
 }
 
 .tool-params label {
